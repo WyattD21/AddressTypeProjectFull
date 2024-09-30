@@ -65,9 +65,13 @@ public:
         }
     }
 
+    // Getter for month
+    int getMonth() const {
+        return month;
+    }
+
     // Print the date in the format MM-DD-YYYY
     void print() const {
         cout << month << "-" << day << "-" << year << endl;
     }
 };
-

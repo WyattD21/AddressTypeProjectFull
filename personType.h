@@ -21,6 +21,6 @@ public:
 
     // Getters for first and last names
     string getFirstName() const { return firstName; }
-    string getLastName() const { return lastName; }
-};
+    string getLastName() const { return lastName;  }
 
+};

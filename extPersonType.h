@@ -9,15 +9,14 @@ using namespace std;
 
 class extPersonType : public personType {
 private:
-    dateType birthdate;     // Composition: dateType instance
-    addressType address;    // Composition: addressType instance
-    string phoneNumber;     // Additional member variables
+    dateType birthdate;
+    addressType address;
+    string phoneNumber;
     string relationship;
 
 public:
     // Default constructor
-    extPersonType()
-        : personType(), birthdate(), address() {  // Initialize base class and member objects
+    extPersonType() : personType(), birthdate(), address() {
         phoneNumber = "";
         relationship = "Friend";
     }
@@ -26,17 +25,16 @@ public:
     extPersonType(const string& first, const string& last, int month, int day, int year,
         const string& streetAddress, const string& city, const string& state, int zip,
         const string& phone, const string& rel)
-        : personType(first, last), birthdate(month, day, year),
-        address(streetAddress, city, state, zip) {
+        : personType(first, last), birthdate(month, day, year), address(streetAddress, city, state, zip) {
         phoneNumber = phone;
         setRelationship(rel);
     }
 
-    // Setter and Getter for phone number
+    // Getter and Setter for phone number
     void setPhoneNumber(const string& phone) { phoneNumber = phone; }
     string getPhoneNumber() const { return phoneNumber; }
 
-    // Setter and Getter for relationship
+    // Getter and Setter for relationship
     void setRelationship(const string& rel) {
         if (rel == "Family" || rel == "Friend" || rel == "Business") {
             relationship = rel;
@@ -49,12 +47,18 @@ public:
 
     string getRelationship() const { return relationship; }
 
+    // Get the birth month
+    int getBirthMonth() const {
+        return birthdate.getMonth();
+    }
+
     // Print function
-    void print() const override {  // Correctly overrides the base class print
-        personType::print();  // Call the print function of the base class
-        birthdate.print();     // Call the print function for the date
-        address.print();       // Call the print function for the address
-        cout << "Phone: " << phoneNumber << endl; // Display the phone number
-        cout << "Relationship: " << relationship << endl; // Display the relationship
+    void print() const override {
+        personType::print();
+        birthdate.print();
+        address.print();
+        cout << "Phone: " << phoneNumber << endl;
+        cout << "Relationship: " << relationship << endl;
     }
 };
+
