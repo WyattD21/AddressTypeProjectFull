@@ -4,7 +4,6 @@
 #include "addressType.h"
 #include <iostream>
 #include <string>
-
 using namespace std;
 
 class extPersonType : public personType {
@@ -15,13 +14,11 @@ private:
     string relationship;
 
 public:
-    // Default constructor
     extPersonType() : personType(), birthdate(), address() {
         phoneNumber = "";
         relationship = "Friend";
     }
 
-    // Parameterized constructor
     extPersonType(const string& first, const string& last, int month, int day, int year,
         const string& streetAddress, const string& city, const string& state, int zip,
         const string& phone, const string& rel)
@@ -30,11 +27,9 @@ public:
         setRelationship(rel);
     }
 
-    // Getter and Setter for phone number
     void setPhoneNumber(const string& phone) { phoneNumber = phone; }
     string getPhoneNumber() const { return phoneNumber; }
 
-    // Getter and Setter for relationship
     void setRelationship(const string& rel) {
         if (rel == "Family" || rel == "Friend" || rel == "Business") {
             relationship = rel;
@@ -44,15 +39,10 @@ public:
             relationship = "Friend";
         }
     }
-
     string getRelationship() const { return relationship; }
 
-    // Get the birth month
-    int getBirthMonth() const {
-        return birthdate.getMonth();
-    }
+    int getBirthMonth() const { return birthdate.getMonth(); }
 
-    // Print function
     void print() const override {
         personType::print();
         birthdate.print();

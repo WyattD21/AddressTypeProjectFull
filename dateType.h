@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-
 using namespace std;
 
 class dateType {
@@ -29,15 +28,12 @@ private:
     }
 
 public:
-    // Default constructor
     dateType() : month(1), day(1), year(1900) {}
 
-    // Parameterized constructor
     dateType(int m, int d, int y) {
         setDate(m, d, y);
     }
 
-    // Set the date with validation
     void setDate(int m, int d, int y) {
         if (y >= 1900) {
             year = y;
@@ -46,7 +42,6 @@ public:
             cout << "Date invalid, setting to 1/1/1900" << endl;
             year = 1900;
         }
-
         if (m >= 1 && m <= 12) {
             month = m;
         }
@@ -54,7 +49,6 @@ public:
             cout << "Date invalid, setting to 1/1/1900" << endl;
             month = 1;
         }
-
         int daysInMonth = getDaysInMonth(month, year);
         if (d >= 1 && d <= daysInMonth) {
             day = d;
@@ -65,12 +59,8 @@ public:
         }
     }
 
-    // Getter for month
-    int getMonth() const {
-        return month;
-    }
+    int getMonth() const { return month; }
 
-    // Print the date in the format MM-DD-YYYY
     void print() const {
         cout << month << "-" << day << "-" << year << endl;
     }

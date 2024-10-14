@@ -1,10 +1,13 @@
-#pragma once
 #include "addressBookType.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
 
 int main() {
     addressBookType addressBook;
     addressBook.initEntry();
-
     int choice;
     string lastName;
     int month;
@@ -19,11 +22,12 @@ int main() {
         cout << "5. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
+        cin.ignore(); // Clear the newline character left in the buffer
 
         switch (choice) {
         case 1:
             cout << "Enter last name: ";
-            cin >> lastName;
+            getline(cin, lastName);
             addressBook.findPerson(lastName);
             break;
         case 2:
@@ -33,7 +37,8 @@ int main() {
             break;
         case 3:
             cout << "Enter relationship (Family, Friend, Business): ";
-            cin >> relationship;
+            cin.ignore();
+            getline(cin, relationship);
             addressBook.findRelations(relationship);
             break;
         case 4:

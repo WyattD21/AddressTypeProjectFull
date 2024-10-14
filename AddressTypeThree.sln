@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddressTypeThree", "AddressTypeThree.vcxproj", "{23E6D2F3-00F6-426F-BF31-D2226D51CD08}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddressBookProject", "AddressTypeThree.vcxproj", "{23E6D2F3-00F6-426F-BF31-D2226D51CD08}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EACCACBD-FF06-4CDB-B753-79E0D881069A}"
+	ProjectSection(SolutionItems) = preProject
+		AddressBookData.txt = AddressBookData.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

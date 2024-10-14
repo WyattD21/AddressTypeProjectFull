@@ -4,42 +4,51 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sys/stat.h>
 
 class addressBookType {
 private:
     vector<extPersonType> addressList;
-    int maxSize;    // Maximum size of the address list
-    int length;     // Current number of entries in the list
+    int maxSize;
+    int length;
 
 public:
-    // Constructor
     addressBookType(int size = 100) {
         maxSize = size;
         length = 0;
         addressList.resize(maxSize);
     }
 
-    // Function to initialize entries from a file
     void initEntry() {
-        ifstream infile("AddressBookData.txt");
+        const char* filename = "AddressBookData.txt";
+        ifstream infile(filename);
+
         if (!infile) {
-            cout << "Error opening file!" << endl;
+            cerr << "Error opening file! Ensure the file exists and is in the correct directory." << endl;
             return;
         }
 
         string firstName, lastName, streetAddress, city, state, phone, relationship;
         int month, day, year, zip;
 
-        while (infile >> firstName >> lastName >> month >> day >> year
-            >> streetAddress >> city >> state >> zip >> phone >> relationship) {
+        while (infile >> firstName >> lastName >> month >> day >> year) {
+            infile.ignore(); // Ignore the newline character after year
+
+            getline(infile, streetAddress);
+            getline(infile, city);
+            infile >> state >> zip >> phone >> relationship;
+
             extPersonType person(firstName, lastName, month, day, year, streetAddress, city, state, zip, phone, relationship);
             addEntry(person);
+
+            // Debug print statement
+            cout << "Added: " << firstName << " " << lastName << ", " << month << "/" << day << "/" << year << ", "
+                << streetAddress << ", " << city << ", " << state << ", " << zip << ", " << phone << ", " << relationship << endl;
         }
 
         infile.close();
     }
 
-    // Function to add an entry
     void addEntry(const extPersonType& person) {
         if (length < maxSize) {
             addressList[length] = person;
@@ -50,7 +59,6 @@ public:
         }
     }
 
-    // Function to find and print a person's information by last name
     void findPerson(const string& lastName) const {
         for (int i = 0; i < length; i++) {
             if (addressList[i].getLastName() == lastName) {
@@ -61,7 +69,6 @@ public:
         cout << "Person with last name " << lastName << " not found." << endl;
     }
 
-    // Function to find and print entries by birth month
     void findBirthdays(int month) const {
         bool found = false;
         for (int i = 0; i < length; i++) {
@@ -75,7 +82,6 @@ public:
         }
     }
 
-    // Function to find and print entries by relationship
     void findRelations(const string& relationship) const {
         bool found = false;
         for (int i = 0; i < length; i++) {
@@ -89,7 +95,6 @@ public:
         }
     }
 
-    // Function to print all entries
     void print() const {
         if (length == 0) {
             cout << "Address book is empty." << endl;
@@ -102,4 +107,3 @@ public:
         }
     }
 };
-
