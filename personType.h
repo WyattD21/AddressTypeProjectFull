@@ -18,4 +18,8 @@ public:
 
     string getFirstName() const { return firstName; }
     string getLastName() const { return lastName; }
+
+    //setFirstName and setLastName methods
+    void setFirstName(const string& first) { firstName = first; }
+    void setLastName(const string& last) { lastName = last; }
 };

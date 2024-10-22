@@ -60,6 +60,8 @@ public:
     }
 
     int getMonth() const { return month; }
+    int getDay() const { return day; }  // Added getDay method
+    int getYear() const { return year; }  // Added getYear method
 
     void print() const {
         cout << month << "-" << day << "-" << year << endl;

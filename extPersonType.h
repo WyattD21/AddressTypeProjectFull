@@ -28,6 +28,17 @@ public:
         setRelationship(rel);
     }
 
+    // Removed setName and assigned directly
+    extPersonType(const string& fullName) {
+        size_t pos = fullName.find(' ');
+        if (pos != string::npos) {
+            string firstName = fullName.substr(pos + 1);
+            string lastName = fullName.substr(0, pos);
+            setFirstName(firstName);
+            setLastName(lastName);
+        }
+    }
+
     void setPhoneNumber(const string& phone) { phoneNumber = phone; }
     string getPhoneNumber() const { return phoneNumber; }
 
@@ -43,6 +54,13 @@ public:
     string getRelationship() const { return relationship; }
 
     int getBirthMonth() const { return birthdate.getMonth(); }
+    int getBirthDay() const { return birthdate.getDay(); }  // fixed getDay
+    int getBirthYear() const { return birthdate.getYear(); }  // fixed getYear
+
+    string getStreetAddress() const { return address.getStreetAddress(); }
+    string getCity() const { return address.getCity(); }
+    string getState() const { return address.getState(); }
+    int getZipCode() const { return address.getZipCode(); }
 
     void print() const override {
         personType::print();
