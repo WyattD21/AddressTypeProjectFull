@@ -1,30 +1,18 @@
 #pragma once
 #include "extPersonType.h"
+#include "orderedLinkedList.h"
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
-#include <sys/stat.h>
 
-class addressBookType {
-private:
-    vector<extPersonType> addressList;
-    int maxSize;
-    int length;
-
+class addressBookType : public orderedLinkedList<extPersonType> {
 public:
-    addressBookType(int size = 100) {
-        maxSize = size;
-        length = 0;
-        addressList.resize(maxSize);
-    }
+    addressBookType(int size = 100) {}
 
     void initEntry() {
-        const char* filename = "AddressBookData.txt";
-        ifstream infile(filename);
-
+        ifstream infile("AddressBookData.txt");
         if (!infile) {
-            cerr << "Error opening file! Ensure the file exists and is in the correct directory." << endl;
+            cerr << "Error opening file!" << endl;
             return;
         }
 
@@ -32,78 +20,76 @@ public:
         int month, day, year, zip;
 
         while (infile >> firstName >> lastName >> month >> day >> year) {
-            infile.ignore(); // Ignore the newline character after year
-
+            infile.ignore();
             getline(infile, streetAddress);
             getline(infile, city);
             infile >> state >> zip >> phone >> relationship;
 
             extPersonType person(firstName, lastName, month, day, year, streetAddress, city, state, zip, phone, relationship);
-            addEntry(person);
+            insert(person);
 
-            // Debug print statement
-            cout << "Added: " << firstName << " " << lastName << ", " << month << "/" << day << "/" << year << ", "
-                << streetAddress << ", " << city << ", " << state << ", " << zip << ", " << phone << ", " << relationship << endl;
+            cout << "Added: " << firstName << " " << lastName << endl;
         }
 
         infile.close();
     }
 
-    void addEntry(const extPersonType& person) {
-        if (length < maxSize) {
-            addressList[length] = person;
-            length++;
-        }
-        else {
-            cout << "Address book is full. Cannot add more entries." << endl;
-        }
-    }
+    void findPerson(const string& fullName) const {
+        nodeType<extPersonType>* current = first;
 
-    void findPerson(const string& lastName) const {
-        for (int i = 0; i < length; i++) {
-            if (addressList[i].getLastName() == lastName) {
-                addressList[i].print();
+        while (current != nullptr) {
+            string key = current->info.getLastName() + " " + current->info.getFirstName();
+            if (key == fullName) {
+                current->info.print();
                 return;
             }
+            current = current->link;
         }
-        cout << "Person with last name " << lastName << " not found." << endl;
+
+        cout << "Person not found." << endl;
     }
 
     void findBirthdays(int month) const {
+        nodeType<extPersonType>* current = first;
         bool found = false;
-        for (int i = 0; i < length; i++) {
-            if (addressList[i].getBirthMonth() == month) {
-                addressList[i].print();
+
+        while (current != nullptr) {
+            if (current->info.getBirthMonth() == month) {
+                current->info.print();
                 found = true;
             }
+            current = current->link;
         }
+
         if (!found) {
             cout << "No persons found with birthday in month " << month << "." << endl;
         }
     }
 
     void findRelations(const string& relationship) const {
+        nodeType<extPersonType>* current = first;
         bool found = false;
-        for (int i = 0; i < length; i++) {
-            if (addressList[i].getRelationship() == relationship) {
-                addressList[i].print();
+
+        while (current != nullptr) {
+            if (current->info.getRelationship() == relationship) {
+                current->info.print();
                 found = true;
             }
+            current = current->link;
         }
+
         if (!found) {
             cout << "No persons found with relationship " << relationship << "." << endl;
         }
     }
 
     void print() const {
-        if (length == 0) {
-            cout << "Address book is empty." << endl;
-        }
-        else {
-            for (int i = 0; i < length; i++) {
-                addressList[i].print();
-                cout << endl;
-            }
+        nodeType<extPersonType>* current = first;
+
+        while (current != nullptr) {
+            current->info.print();
+            cout << endl;
+            current = current->link;
         }
     }
 };

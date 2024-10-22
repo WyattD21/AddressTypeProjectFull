@@ -4,6 +4,7 @@
 #include "addressType.h"
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 class extPersonType : public personType {
@@ -50,5 +51,21 @@ public:
         cout << "Phone: " << phoneNumber << endl;
         cout << "Relationship: " << relationship << endl;
     }
-};
 
+    // Overload operators based on first and last name
+    bool operator==(const extPersonType& other) const {
+        string thisKey = getLastName() + " " + getFirstName();
+        string otherKey = other.getLastName() + " " + other.getFirstName();
+        return thisKey == otherKey;
+    }
+
+    bool operator!=(const extPersonType& other) const {
+        return !(*this == other);
+    }
+
+    bool operator>=(const extPersonType& other) const {
+        string thisKey = getLastName() + " " + getFirstName();
+        string otherKey = other.getLastName() + " " + other.getFirstName();
+        return thisKey >= otherKey;
+    }
+};
