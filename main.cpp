@@ -25,11 +25,11 @@ int main() {
         cout << "7. Exit and Save\n";
         cout << "Enter your choice: ";
         cin >> choice;
-        cin.ignore();  // Clear any leftover newline characters
+        cin.ignore();  
 
         switch (choice) {
         case 1:
-            addressBook.addEntryInteractively();  // New function for interactive entry
+            addressBook.addEntryInteractively();  
             break;
         case 2:
             cout << "Enter first name: ";
@@ -56,13 +56,13 @@ int main() {
             cout << "Enter last name: ";
             getline(cin, lastName);
             fullName = lastName + " " + firstName;
-            addressBook.deletePerson(fullName);  // New function for deleting a person
+            addressBook.deletePerson(fullName);  
             break;
         case 6:
             addressBook.print();
             break;
         case 7:
-            addressBook.saveToFile();  // Save data before quitting
+            addressBook.saveToFile();  
             cout << "Exiting and saving data..." << endl;
             break;
         default:

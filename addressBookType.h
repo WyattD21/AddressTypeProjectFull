@@ -4,10 +4,25 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
 
 class addressBookType : public orderedLinkedList<extPersonType> {
 public:
     addressBookType(int size = 100) {}
+
+    //Added a clock for when the file is changed
+    string getFormattedTime() const {
+        time_t now = time(0);
+        struct tm timeinfo;
+        localtime_s(&timeinfo, &now);
+
+        char buffer[80];
+        strftime(buffer, sizeof(buffer), "%m/%d/%Y %H:%M:%S", &timeinfo);
+        return string(buffer);
+    }
 
     void initEntry() {
         ifstream infile("AddressBookData.txt");
@@ -48,7 +63,7 @@ public:
         cin >> day;
         cout << "Enter birth year: ";
         cin >> year;
-        cin.ignore();  // Clear any remaining characters
+        cin.ignore();
         cout << "Enter street address: ";
         getline(cin, streetAddress);
         cout << "Enter city: ";
@@ -66,7 +81,11 @@ public:
         extPersonType newPerson(firstName, lastName, month, day, year, streetAddress, city, state, zip, phone, relationship);
         insert(newPerson);
 
-        cout << "New entry added." << endl;
+        srand(static_cast<unsigned int>(time(0)));  // Had to make srand safe, caused memory leaks
+        int randomID = rand() % 10000;
+
+        //Outputs the time the entry was added
+        cout << "New entry added at: " << getFormattedTime() << endl;
     }
 
     void findPerson(const string& fullName) const {
@@ -83,10 +102,9 @@ public:
 
         cout << "Person not found." << endl;
     }
-
     void deletePerson(const string& fullName) {
-        deleteNode(extPersonType(fullName));  // Use deleteNode from orderedLinkedList
-        cout << fullName << " has been deleted from the address book." << endl;
+        deleteNode(extPersonType(fullName));
+        cout << fullName << " has been deleted from Address Book data at " << getFormattedTime() << endl;
     }
 
     void findBirthdays(int month) const {
@@ -148,7 +166,7 @@ public:
         }
 
         outfile.close();
-        cout << "Address book saved successfully." << endl;
+        cout << "Address book saved successfully at " << getFormattedTime()<< endl;
     }
 
     void print() const {
