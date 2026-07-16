@@ -1,5 +1,7 @@
-# Address Book Pro
+# C++ Address Book
 
-An object-oriented C++ address book with a new responsive contact-directory demo. The interface adds full-text search, relationship filters, birthday summaries, and contact cards while preserving the original class hierarchy and data file.
+This project uses several C++ classes to store names, addresses, birthdays, phone numbers, and relationships. Contact data is loaded from `AddressBookData.txt`.
 
-Open `index.html` for the UI. Build the C++ version with CMake, then run it beside `AddressBookData.txt`.
+There is also a browser version in `index.html` with search and relationship filters.
+
+Build the C++ program with CMake and run it from the same folder as the data file.
