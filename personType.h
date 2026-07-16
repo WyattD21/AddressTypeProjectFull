@@ -12,6 +12,8 @@ public:
     personType(string first = "", string last = "")
         : firstName(first), lastName(last) {}
 
+    virtual ~personType() = default;
+
     virtual void print() const {
         cout << firstName << " " << lastName << endl;
     }
